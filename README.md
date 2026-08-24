@@ -4,6 +4,17 @@ This repository does one thing: it tells [r-universe](https://r-universe.dev) to
 build the `ecdata` R package from
 [`Executive-Communications-Dataset/ecdata`](https://github.com/Executive-Communications-Dataset/ecdata).
 
+## Activation
+
+Pushing `packages.json` is not enough on its own. A universe only starts building
+once the [r-universe GitHub App](https://github.com/apps/r-universe/installations/new)
+is installed on this organisation. Installing it creates the build monorepo at
+`https://github.com/r-universe/Executive-Communications-Dataset` and the first
+build follows shortly after.
+
+Until then the URLs below return 404, and `install.packages()` reports
+`cannot open URL .../src/contrib/PACKAGES`.
+
 ## Installing ecdata
 
 ```r
@@ -33,6 +44,6 @@ Append to `packages.json`:
 { "package": "somepkg", "url": "https://github.com/Executive-Communications-Dataset/somepkg" }
 ```
 
-r-universe picks up changes within about an hour. Build status, logs and the
+Once the app is installed, r-universe picks up changes within about an hour. Build status, logs and the
 package listing are at
 <https://executive-communications-dataset.r-universe.dev>.
