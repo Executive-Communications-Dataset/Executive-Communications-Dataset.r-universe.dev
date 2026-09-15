@@ -25,6 +25,15 @@ That is a real R repository, so `update.packages()` works and dependencies
 resolve from CRAN as usual. No `remotes`, no `pak`, no compiler toolchain needed
 on platforms r-universe builds binaries for.
 
+## The sentence view
+
+From `ecdata` 1.4.0 the same call reaches the sentence-level view of a release:
+
+```r
+load_ecd(country = 'Chile')                     # 1,874 rows
+load_ecd(country = 'Chile', unit = 'sentence')  # 16,787 sentences
+```
+
 ## Why this exists
 
 `ecdata` was archived from CRAN on 2025-01-12. Returning it there means a new
