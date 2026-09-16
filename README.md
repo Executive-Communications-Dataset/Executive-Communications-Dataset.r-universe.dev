@@ -1,58 +1,42 @@
-# Executive Communications Dataset — R universe
+# Executive Communications Dataset — R universe (dormant)
 
-This repository does one thing: it tells [r-universe](https://r-universe.dev) to
-build the `ecdata` R package from
-[`Executive-Communications-Dataset/ecdata`](https://github.com/Executive-Communications-Dataset/ecdata).
-
-## Activation
-
-Pushing `packages.json` is not enough on its own. A universe only starts building
-once the [r-universe GitHub App](https://github.com/apps/r-universe/installations/new)
-is installed on this organisation. Installing it creates the build monorepo at
-`https://github.com/r-universe/Executive-Communications-Dataset` and the first
-build follows shortly after.
-
-Until then the URLs below return 404, and `install.packages()` reports
-`cannot open URL .../src/contrib/PACKAGES`.
+This registry is empty. `ecdata` is no longer published through
+[r-universe](https://r-universe.dev), and
+`https://executive-communications-dataset.r-universe.dev` no longer serves it.
 
 ## Installing ecdata
 
 ```r
-install.packages('ecdata', repos = 'https://executive-communications-dataset.r-universe.dev')
+pak::pkg_install('Executive-Communications-Dataset/ecdata')
 ```
 
-That is a real R repository, so `update.packages()` works and dependencies
-resolve from CRAN as usual. No `remotes`, no `pak`, no compiler toolchain needed
-on platforms r-universe builds binaries for.
+That installs the current `main` of
+[Executive-Communications-Dataset/ecdata](https://github.com/Executive-Communications-Dataset/ecdata),
+which is where the package is maintained.
 
-## The sentence view
+## Why it was switched off
 
-From `ecdata` 1.4.0 the same call reaches the sentence-level view of a release:
+r-universe built the package for three weeks in August and September 2026 and
+then stopped syncing silently — the GitHub App stayed installed and healthy, the
+registry was unchanged, and the subdomain simply kept serving an old version.
+Nothing signalled it. A publishing channel that can go stale without saying so is
+worse than not having one, since users cannot tell the difference between "this
+is current" and "this has not updated in a month".
 
-```r
-load_ecd(country = 'Chile')                     # 1,874 rows
-load_ecd(country = 'Chile', unit = 'sentence')  # 16,787 sentences
-```
+## Turning it back on
 
-## Why this exists
-
-`ecdata` was archived from CRAN on 2025-01-12. Returning it there means a new
-submission of a previously-archived package, which has to be made from the
-maintainer's own email address and reviewed by the CRAN team. r-universe needs
-neither, rebuilds on every push to `main`, and gives users a current package in
-the meantime.
-
-This is not a replacement for CRAN. It is what people can install from until the
-CRAN question is settled.
-
-## Adding another package
-
-Append to `packages.json`:
+Put the package back in `packages.json`:
 
 ```json
-{ "package": "somepkg", "url": "https://github.com/Executive-Communications-Dataset/somepkg" }
+[
+  {
+    "package": "ecdata",
+    "url": "https://github.com/Executive-Communications-Dataset/ecdata"
+  }
+]
 ```
 
-Once the app is installed, r-universe picks up changes within about an hour. Build status, logs and the
-package listing are at
-<https://executive-communications-dataset.r-universe.dev>.
+and reinstall the [r-universe GitHub App](https://github.com/apps/r-universe/installations/new)
+if it has since been removed. Builds resume from `main`. If you do, pair it with
+a check that compares the served version against `DESCRIPTION`, so a stall is
+visible.
